@@ -104,6 +104,11 @@ class AfandiHello
         echo '</div>';
     }
 
+    public function enqueue_scripts()
+    {
+
+    }
+
     public function activate()
     {
         if (!$this->check_peepso()) {

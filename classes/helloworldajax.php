@@ -24,13 +24,14 @@ class PeepSoHelloworldAjax implements PeepSoAjaxCallback
         $notif = $settings->get_option('peepso_helloworld_custom_message');
 
 
+        $current_user = wp_get_current_user();
         $user_id = PeepSo::get_user_id();
-        $email = PeepSo::get_user_id();
-        $message = 'user X ';
+        $message = $notif;
 
         if ($status) {
             if ($peepsoPostbox->post()) {
-                mail('caffeinated@example.com', 'My Subject', $message);
+                PeepSoMailQueue::add($user_id, $current_user->user_email, "Hello Afandi", $message, 'notif');
+                // wp_mail($current_user->user_email, "Hello Afandi", $message);
             }
         }
     }
