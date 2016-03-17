@@ -14,7 +14,8 @@ class PeepSoHelloInstall extends PeepSoInstall
 		// Set some default settings
 		$settings = PeepSoConfigSettings::get_instance();
 		$settings->set_option('peepso_helloworld_use_custom_message', 0);
-		$settings->set_option('peepso_helloworld_custom_message', 'Custom Hello World!');
+		$settings->set_option('peepso_helloworld_custom_message', 'Hello From Afandi');
+		$settings->set_option('peepso_helloworld_custom_message', 'Hello From Afandi');
 		$settings->set_option('peepso_helloworld_exclamation_marks', 1);
 		$settings->set_option('peepso_helloworld_align', 'left');
 
