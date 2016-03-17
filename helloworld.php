@@ -33,6 +33,10 @@ class AfandiHello
     const PLUGIN_NAME = 'AfandiHello';
     const PLUGIN_RELEASE = ''; //ALPHA1, BETA1, RC1, '' for STABLE
 
+    public $widgets = array(
+        'AfandiHelloWidget',
+    );
+
     private function __construct()
     {
         add_action('peepso_init', array(&$this, 'init'));
@@ -44,6 +48,70 @@ class AfandiHello
         register_activation_hook(__FILE__, array(&$this, 'activate'));
     }
 
-PeepSoHelloworld::get_instance();
+    public static function get_instance()
+    {
+        if (NULL === self::$_instance) {
+            self::$_instance = new self();
+        }
+        return (self::$_instance);
+    }
+
+    public function init()
+    {
+        PeepSo::add_autoload_directory(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'classes' . DIRECTORY_SEPARATOR);
+        PeepSoTemplate::add_template_directory(plugin_dir_path(__FILE__));
+
+        if (is_admin()) {
+            add_action('admin_init', array(&$this, 'check_peepso'));
+            add_filter('peepso_admin_dashboard_tabs', array(&$this,'admin_dashboard_tabs'));
+            add_filter('peepso_admin_config_tabs', array(&$this, 'admin_config_tabs'));
+        } else {
+            add_action('wp_enqueue_scripts', array(&$this, 'enqueue_scripts'));
+        }
+
+
+
+        add_filter('peepso_widgets', array(&$this, 'register_widgets'));
+    }
+
+
+    public function check_peepso()
+    {
+        if (!class_exists('PeepSo'))
+        {
+            if (is_plugin_active(plugin_basename(__FILE__))) {
+                // deactivate the plugin
+                deactivate_plugins(plugin_basename(__FILE__));
+                // display notice for admin
+                add_action('admin_notices', array(&$this, 'disabled_notice'));
+                if (isset($_GET['activate'])) {
+                    unset($_GET['activate']);
+                }
+            }
+            return (FALSE);
+        }
+
+        return (TRUE);
+    }
+
+    public function activate()
+    {
+        if (!$this->check_peepso()) {
+            return (FALSE);
+        }
+
+        require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'install' . DIRECTORY_SEPARATOR . 'activate.php');
+        $install = new PeepSoHelloInstall();
+        $res = $install->plugin_activation();
+        if (FALSE === $res) {
+            // error during installation - disable
+            deactivate_plugins(plugin_basename(__FILE__));
+        }
+
+        return (TRUE);
+    }
+}
+
+AfandiHello::get_instance();
 
 // EOF
