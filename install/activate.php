@@ -29,7 +29,7 @@ class PeepSoHelloInstall extends PeepSoInstall
 	{
 		$aRet = array(
 			'hello' => "
-				CREATE TABLE `helloworld` (
+				CREATE TABLE `afandihello` (
 					`hlw_id`				BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
 
 					PRIMARY KEY (`hello_id`),

@@ -93,6 +93,17 @@ class AfandiHello
         return (TRUE);
     }
 
+    public function disabled_notice()
+    {
+        echo '<div class="error fade">';
+        echo
+        '<strong>' , self::PLUGIN_NAME , ' ' ,
+        __('plugin requires the PeepSo plugin to be installed and activated.', 'peepso'),
+        '</a>',
+        '</strong>';
+        echo '</div>';
+    }
+
     public function activate()
     {
         if (!$this->check_peepso()) {
@@ -123,7 +134,7 @@ class AfandiHello
             'label' => __('Afandi Hello Tab', 'afandihelloworld'),
             'tab' => 'afandihello',
             'description' => __('Afandi Config Tab', 'afandihello'),
-            'function' => 'AfandiConfigSectionHello',
+            'function' => 'PeepSoConfigSectionHelloworld',
         );
 
         return $tabs;

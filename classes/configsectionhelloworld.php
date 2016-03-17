@@ -1,6 +1,6 @@
 <?php
 
-class AfandiConfigSectionHello extends PeepSoConfigSectionAbstract
+class PeepSoConfigSectionHelloworld extends PeepSoConfigSectionAbstract
 {
 	// Builds the groups array
 	public function register_config_groups()
