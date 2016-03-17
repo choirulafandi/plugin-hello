@@ -63,7 +63,6 @@ class AfandiHello
 
         if (is_admin()) {
             add_action('admin_init', array(&$this, 'check_peepso'));
-            add_filter('peepso_admin_dashboard_tabs', array(&$this,'admin_dashboard_tabs'));
             add_filter('peepso_admin_config_tabs', array(&$this, 'admin_config_tabs'));
         } else {
             add_action('wp_enqueue_scripts', array(&$this, 'enqueue_scripts'));
@@ -109,6 +108,25 @@ class AfandiHello
         }
 
         return (TRUE);
+    }
+
+    /**
+     * Registers a tab in the PeepSo Config Toolbar
+     * PS_FILTER
+     *
+     * @param $tabs array
+     * @return array
+     */
+    public function admin_config_tabs( $tabs )
+    {
+        $tabs['afandihello'] = array(
+            'label' => __('Afandi Hello Tab', 'afandihelloworld'),
+            'tab' => 'afandihello',
+            'description' => __('Afandi Config Tab', 'afandihello'),
+            'function' => 'AfandiConfigSectionHello',
+        );
+
+        return $tabs;
     }
 }
 
